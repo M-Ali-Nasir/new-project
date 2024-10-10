@@ -1744,7 +1744,7 @@ class HomeController extends Controller
         $messageContent = $request->input('message');
 
         // Send the email
-        Mail::to('man171m@gmail.com')->send(new ContactUsMail($name, $phone, $messageContent, $email));
+        Mail::to('trendlinepurchaseinfo@gmail.com')->send(new ContactUsMail($name, $phone, $messageContent, $email));
 
         return redirect()->route('home');
     }
