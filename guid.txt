@@ -13,5 +13,6 @@ or you can simply install xampp.
 5- run "composer install"
 6- a .env file will be created. copy all the text from envtext.txt file (present in root directory) and replace it with .env file text.
 7- configure the DB variable from env if you are using MySQL server instead of xammp
-8- run php artisan serve in the terminal opened in root directory of your project.
+8- run "php artisan storage:link"
+8- run "php artisan serve" in the terminal opened in root directory of your project.
 9- open http://127.0.0.1:8000 
