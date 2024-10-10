@@ -1,0 +1,17 @@
+To run this project on your local machine make sure you have following things installed on your machine:
+1- PHP
+2- MySQL
+3- Composer
+
+or you can simply install xampp.
+
+****steps:
+1- clone the project from given link.
+2- import database file (trendline.sql) from database folder to you MySQL server or if you are using xammp run mysql and php and open php my admin, create a new database trendline and import this file in it.
+3- if you are using xampp place the project in htdocs folder of xammp
+4- open terminal in root directory of project
+5- run "composer install"
+6- a .env file will be created. copy all the text from envtext.txt file (present in root directory) and replace it with .env file text.
+7- configure the DB variable from env if you are using MySQL server instead of xammp
+8- run php artisan serve in the terminal opened in root directory of your project.
+9- open http://127.0.0.1:8000 
