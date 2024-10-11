@@ -340,11 +340,11 @@ class HomeController extends Controller
         $dbcart = [];
         $user = Auth::user();
 
-        $products = Product::where('for_rent',1)->with('variations')->take(20)->get();
+        $products = Product::where('for_rent', 1)->with('variations')->take(20)->get();
         $search = $request->input('search');
 
         if ($search) {
-            $products = Product::where('for_rent',1)->where('name', 'LIKE', '%' . $search . '%')->with('variations')->take(20)->get();
+            $products = Product::where('for_rent', 1)->where('name', 'LIKE', '%' . $search . '%')->with('variations')->take(20)->get();
         }
         if ($user) {
             $cart = Cart::with('product')
@@ -1641,6 +1641,10 @@ class HomeController extends Controller
     public function checkoutView(Request $request, $product_id, $iscart)
     {
 
+        $quantity = 1;
+        if (isset($request->quantity)) {
+            $quantity = $request->quantity;
+        }
         $return_date = null;
         if (!$iscart) {
             if (isset($request->return_date)) {
@@ -1682,7 +1686,7 @@ class HomeController extends Controller
                 }
             } else {
                 $product = Product::where('id', $product_id)->first();
-                return view('pages.checkout', compact('user', 'dbcart', 'product_id', 'iscart', 'product', 'return_date', 'variation'));
+                return view('pages.checkout', compact('user', 'dbcart', 'product_id', 'iscart', 'product', 'return_date', 'variation', 'quantity'));
             }
         } else {
             $cart = Session::get('cart');
@@ -1724,7 +1728,7 @@ class HomeController extends Controller
                 }
             } else {
                 $product = Product::where('id', $product_id)->first();
-                return view('pages.checkout', compact('product_id', 'iscart', 'product', 'return_date', 'variation'));
+                return view('pages.checkout', compact('product_id', 'iscart', 'product', 'return_date', 'variation', 'quantity'));
             }
         }
     }
@@ -1744,7 +1748,7 @@ class HomeController extends Controller
         $messageContent = $request->input('message');
 
         // Send the email
-        Mail::to('trendlinepurchaseinfo@gmail.com')->send(new ContactUsMail($name, $phone, $messageContent, $email));
+        Mail::to('man171m@gmail.com')->send(new ContactUsMail($name, $phone, $messageContent, $email));
 
         return redirect()->route('home');
     }
