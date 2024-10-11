@@ -163,7 +163,8 @@
             <div class="checkout-summary px-0 mx-0">
               <h1>Cart Total</h1>
               @if (isset($product))
-              <p class="text-dark">{{ $product->name }} &nbsp; &nbsp;&nbsp;&nbsp; Quantity: 1 &nbsp; &nbsp;&nbsp;&nbsp;
+              <p class="text-dark">{{ $product->name }} &nbsp; &nbsp;&nbsp;&nbsp; Quantity: {{ $quantity }} &nbsp;
+                &nbsp;&nbsp;&nbsp;
                 variation: {{ $variation->color }}-{{ $variation->size }}&nbsp; &nbsp;&nbsp;&nbsp; Status:
                 @if($return_date == null)
                 Purchase
@@ -175,8 +176,9 @@
               <p class="sub-total text-dark">Sub Total<span>RS.{{ $product->price }}</span></p>
               <h2>Grand Total<span>RS.{{ $product->price }}</span></h2>
               <input type="text" name="total_price" value="{{ $product->price }}" hidden>
-              <input type="text" name="total_quantity" value="1" hidden>
+              <input type="text" name="total_quantity" value="{{ $quantity }}" hidden>
               <input type="text" name="variation_id" value="{{ $variation->id }}" hidden>
+
 
               @if (isset($return_date)&& $return_date!==null)
               <input type="date" name="return_date" value="{{ $return_date }}" hidden>
