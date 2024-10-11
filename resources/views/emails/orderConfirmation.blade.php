@@ -11,7 +11,7 @@
 
   <h3>Order Summary</h3>
   <p><strong>Order ID:</strong> {{ $order->id }}</p>
-  <p><strong>Total Amount:</strong> ${{ number_format($order->price, 2) }}</p>
+  <p><strong>Total Amount:</strong> {{ number_format($order->price, 2) }}</p>
   <p><strong>Order Date:</strong> {{ $order->created_at->format('F j, Y, g:i a') }}</p>
 
   <h3>Items Ordered:</h3>
@@ -19,7 +19,7 @@
     @foreach ($order->orderDetails as $item)
     <li>
 
-      id: {{ $item->id }} - Quantity: {{ $item->quantity }} - Price: ${{ number_format($item->price, 2) }}
+      id: {{ $item->id }} - Quantity: {{ $item->quantity }} - Price: {{ number_format($item->price, 2) }}
 
     </li>
     @endforeach
