@@ -16,3 +16,6 @@ or you can simply install xampp.
 8- run "php artisan storage:link"
 9- run "php artisan serve" in the terminal opened in root directory of your project.
 10- open http://127.0.0.1:8000 
+admin credentials.
+email: admin@trendline.com
+password: 123456789
