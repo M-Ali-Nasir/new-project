@@ -18,136 +18,7 @@ class OrderController extends Controller
     /**
      * Place an order and save order details.
      */
-    // public function placeOrder(Request $request)
-    // {
-    //     // Validate input data
-    //     // $request->validate([
-    //     //     'fname' => 'required|string|max:255',
-    //     //     'lname' => 'required|string|max:255',
-    //     //     'email' => 'required|email',
-    //     //     'phone' => 'required|string|max:20',
-    //     //     'address' => 'required|string',
-    //     //     'country' => 'required|string',
-    //     //     'state' => 'required|string',
-    //     //     'city' => 'required|string',
-    //     //     'zip' => 'required|string|max:10',
-    //     //     'shippingCheckbox' => 'nullable|boolean',
-    //     //     'shipping_fname' => 'nullable|string|max:255',
-    //     //     'shipping_lname' => 'nullable|string|max:255',
-    //     //     'shipping_email' => 'nullable|email',
-    //     //     'shipping_phone' => 'nullable|string|max:20',
-    //     //     'shipping_address' => 'nullable|string',
-    //     //     'shipping_country' => 'nullable|string',
-    //     //     'shipping_state' => 'nullable|string',
-    //     //     'shipping_city' => 'nullable|string',
-    //     //     'shipping_zip' => 'nullable|string|max:10',
-    //     //     'product_id' => 'nullable|exists:products,id',
-    //     //     'quantity' => 'nullable|integer|min:1'
-    //     // ]);
 
-    //     $isCartOrder = $request->input('iscart', false);
-    //     $userId = Auth::id();
-    //     $orderProducts = [];
-
-    //     if ($userId) {
-    //         // Get products from cart for logged-in users
-    //         if ($isCartOrder) {
-    //             $orderProducts = Cart::where('user_id', $userId)->with('product')->get()->map(function ($cartItem) {
-    //                 return [
-    //                     'product_id' => $cartItem->product_id,
-    //                     'quantity' => $cartItem->quantity,
-    //                     'price' => $cartItem->product->price,
-    //                 ];
-    //             })->toArray();
-    //         } else {
-    //             // Single product order for logged-in user
-    //             $productId = $request->input('product_id');
-    //             $quantity = $request->input('quantity', 1);
-    //             $product = Product::findOrFail($productId);
-    //             $orderProducts[] = [
-    //                 'product_id' => $product->id,
-    //                 'quantity' => $quantity,
-    //                 'price' => $product->price,
-    //             ];
-    //         }
-    //     } else {
-    //         // Guest user
-    //         $cartSession = Session::get('cart', []);
-    //         if ($isCartOrder) {
-    //             $orderProducts = collect($cartSession)->map(function ($cartItem) {
-    //                 return [
-    //                     'product_id' => $cartItem['product_id'],
-    //                     'quantity' => $cartItem['quantity'],
-    //                     'price' => $cartItem['price'],
-    //                 ];
-    //             })->toArray();
-    //         } else {
-    //             // Single product order for guest user
-    //             $productId = $request->input('product_id');
-    //             $quantity = $request->input('quantity', 1);
-    //             $product = Product::findOrFail($productId);
-    //             $orderProducts[] = [
-    //                 'product_id' => $product->id,
-    //                 'quantity' => $quantity,
-    //                 'price' => $product->price,
-    //             ];
-    //         }
-    //     }
-
-    //     // Calculate total price
-    //     $totalPrice = collect($orderProducts)->sum(fn($item) => $item['price'] * $item['quantity']);
-    //     $order = Order::create([
-    //         'user_id' => $userId,
-    //         'price' => $totalPrice,
-    //         'quantity' => collect($orderProducts)->sum('quantity'),
-    //     ]);
-
-    //     // Save order details
-    //     foreach ($orderProducts as $item) {
-    //         OrderDetail::create([
-    //             'order_id' => $order->id,
-    //             'billing_first_name' => $request->input('fname'),
-    //             'billing_last_name' => $request->input('lname'),
-    //             'billing_email' => $request->input('email'),
-    //             'billing_mobile_no' => $request->input('phone'),
-    //             'billing_address' => $request->input('address'),
-    //             'billing_country' => $request->input('country'),
-    //             'billing_state' => $request->input('state'),
-    //             'billing_city' => $request->input('city'),
-    //             'billing_zip_code' => $request->input('zip'),
-    //             'product_id' => $item['product_id'],
-    //             'quantity' => $item['quantity'],
-    //             'price' => $item['price'],
-    //             'shipping_first_name' => $request->has('shippingCheckbox') ? $request->input('shipping_fname') : null,
-    //             'shipping_last_name' => $request->has('shippingCheckbox') ? $request->input('shipping_lname') : null,
-    //             'shipping_email' => $request->has('shippingCheckbox') ? $request->input('shipping_email') : null,
-    //             'shipping_mobile_no' => $request->has('shippingCheckbox') ? $request->input('shipping_phone') : null,
-    //             'shipping_address' => $request->has('shippingCheckbox') ? $request->input('shipping_address') : null,
-    //             'shipping_country' => $request->has('shippingCheckbox') ? $request->input('shipping_country') : null,
-    //             'shipping_state' => $request->has('shippingCheckbox') ? $request->input('shipping_state') : null,
-    //             'shipping_city' => $request->has('shippingCheckbox') ? $request->input('shipping_city') : null,
-    //             'shipping_zip_code' => $request->has('shippingCheckbox') ? $request->input('shipping_zip') : null,
-    //         ]);
-    //     }
-
-    //     // Create initial order status
-    //     OrderStatus::create([
-    //         'order_id' => $order->id,
-    //         'status' => 'processing' // Default status
-    //     ]);
-
-    //     // Clear cart for cart orders
-    //     if ($isCartOrder) {
-    //         $userId ? Cart::where('user_id', $userId)->delete() : Session::forget('cart');
-    //     }
-
-    //     // Send confirmation email
-    //     //Mail::to($request->input('email'))->send(new OrderConfirmationMail($order));
-
-    //     // Redirect to success page
-    //     return redirect()->route('order-success', ['order_id' => $order->id])
-    //         ->with('success', 'Order placed successfully!');
-    // }
 
 
 
@@ -176,7 +47,7 @@ class OrderController extends Controller
                     $orderType = "rent";
                 }
                 $productId = $request->input('product_id');
-                $quantity = $request->input('quantity', 1);
+                $quantity = $request->input('total_quantity', 1);
                 $product = Product::findOrFail($productId);
                 $orderProducts[] = [
                     'product_id' => $product->id,
@@ -205,7 +76,7 @@ class OrderController extends Controller
                     $orderType = "rent";
                 }
                 $productId = $request->input('product_id');
-                $quantity = $request->input('quantity', 1);
+                $quantity = $request->input('total_quantity', 1);
                 $product = Product::findOrFail($productId);
                 $orderProducts[] = [
                     'product_id' => $product->id,
