@@ -340,11 +340,11 @@ class HomeController extends Controller
         $dbcart = [];
         $user = Auth::user();
 
-        $products = Product::with('variations')->take(20)->get();
+        $products = Product::where('for_rent',1)->with('variations')->take(20)->get();
         $search = $request->input('search');
 
         if ($search) {
-            $products = Product::where('name', 'LIKE', '%' . $search . '%')->with('variations')->take(20)->get();
+            $products = Product::where('for_rent',1)->where('name', 'LIKE', '%' . $search . '%')->with('variations')->take(20)->get();
         }
         if ($user) {
             $cart = Cart::with('product')
